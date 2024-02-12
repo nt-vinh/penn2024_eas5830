@@ -29,25 +29,15 @@ def is_ordered_block(block_num):
     ordered = True
        
     #YOUR CODE HERE
-    num_transactions = w3.eth.get_block_transaction_count(block_num)
+    num_transactions = len(block.transactions)
     if num_transactions > 1:
         for i in range(num_transactions-1):
-            current_tx    = w3.eth.get_transaction_by_block(block_num, i)
-            current_type  = current_tx.type
-            # if current_type == 0:
-            #     current_priority = current_tx.gasPrice - block.baseFeePerGas
-            # else:
-            #     current_priority = min(current_tx.maxPriorityFeePerGas, current_tx.maxFeePerGas - block.baseFeePerGas)
-            current_priority = current_tx.gasPrice * current_tx.gas
-
-            next_tx       = w3.eth.get_transaction_by_block(block_num, i+1)
-            next_type     = next_tx.type
-            # if next_type == 0:
-            #     next_priority = next_tx.gasPrice - block.baseFeePerGas
-            # else:
-            #     next_priority = min(next_tx.maxPriorityFeePerGas, next_tx.maxFeePerGas - block.baseFeePerGas)
-            next_priority = next_tx.gasPrice * next_tx.gas
-            if next_priority >= current_priority:
+            current_tx    = w3.eth.get_transaction(block.transactions[i])
+            current_priority = current_tx.gasPrice
+	    
+            next_tx       = w3.eth.get_transaction(block.transactions[i+1])
+            next_priority = next_tx.gasPrice
+            if next_priority > current_priority:
                 ordered = False
                 break
             #
