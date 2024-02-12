@@ -17,7 +17,7 @@ def sign(m):
     # your code here
 
     message = encode_defunct(text = m)
-    signed_message = w3.eth.account.signed_message(message, private_key=private_key)
+    signed_message = w3.eth.account.sign_message(message, private_key=private_key)
 
     assert isinstance(signed_message, eth_account.datastructures.SignedMessage)
 
