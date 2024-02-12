@@ -9,7 +9,7 @@ def myhash(m):
     nonce = ''.join(random.choices(string.ascii_uppercase +
                              string.digits, k=len(m)))
     #Generate hex digest
-    h_hex = hashlib.sha256((nonce + m).encode('utf-16')).hexdigest()
+    h_hex = hashlib.sha256((nonce + m).encode('utf-8')).hexdigest()
     return nonce, h_hex
 
 
