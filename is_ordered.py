@@ -3,7 +3,7 @@ import random
 import json
 
 
-rpc_url = "http://localhost:8545" #Set this to a node that you can connect to (e.g. an Alchemy node)
+rpc_url = "https://mainnet.infura.io/v3/97d5ebed0b714ef7b442181913944a21" #Set this to a node that you can connect to (e.g. an Alchemy node)
 w3 = Web3(Web3.HTTPProvider(rpc_url))
 
 if w3.is_connected():
