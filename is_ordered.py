@@ -47,7 +47,7 @@ def is_ordered_block(block_num):
             # else:
             #     next_priority = min(next_tx.maxPriorityFeePerGas, next_tx.maxFeePerGas - block.baseFeePerGas)
             next_priority = next_tx.gasPrice * next_tx.gas
-            if next_priority > current_priority:
+            if next_priority >= current_priority:
                 ordered = False
                 break
             #
