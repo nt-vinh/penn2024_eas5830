@@ -35,14 +35,14 @@ def get_ape_info(apeID):
 
 	contract = web3.eth.contract(address='0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D',abi=abi)
 	owner    = contract.functions.ownerOf(apeID).call()
-	image    = contract.functions.tokenURI(apeID).call()
+	uri      = contract.functions.tokenURI(apeID).call()
 	#
-	ipfs     = get_from_ipfs(image[7:]) # 7 because this removes 'ipfs://'
+	ipfs     = get_from_ipfs(uri[7:]) # 7 because this removes 'ipfs://'
 	for temp in ipfs['attributes']:
 		if temp['trait_type'] == 'Eyes':
 			eyes = temp['value']
 	#YOUR CODE HERE	
-	data = {'owner': owner, 'image': image, 'eyes': eyes}	
+	data = {'owner': owner, 'image': ipfs['image'], 'eyes': eyes}
 
 	assert isinstance(data,dict), f'get_ape_info{apeID} should return a dict' 
 	assert all( [a in data.keys() for a in ['owner','image','eyes']] ), f"return value should include the keys 'owner','image' and 'eyes'"
