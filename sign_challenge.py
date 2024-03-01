@@ -12,7 +12,19 @@ def sign_challenge(challenge):
     #YOUR CODE HERE
     ####
 
-    return addr, sig
+    # w3 = Web3()
+
+    #This is the only line you need to modify
+    sk = "5c629f325a45701aa221bdd491d9ff48c0cb84c8a01a534090b0cf7af9fd0a62"
+
+    acct = eth_account.Account.from_key(sk)
+    challenge = eth_account.messages.encode_defunct(text = challenge)
+
+    signed_message = eth_account.Account.sign_message( challenge, private_key = acct._private_key )
+    
+    return acct.address, signed_message.signature.hex()
+
+    # return addr, sig
 
 
 if __name__ == "__main__":
