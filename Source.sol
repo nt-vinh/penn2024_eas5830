@@ -17,13 +17,14 @@ contract Source is AccessControl {
 	constructor( address admin ) {
         	_grantRole(DEFAULT_ADMIN_ROLE, admin);
 	        _grantRole(ADMIN_ROLE, admin);
+		_grantRole(WARDEN_ROLE, admin);
 	}
 	
 	function deposit(address _token, address _recipient, uint256 _amount ) public {
 		//YOUR CODE HERE
 		require(approved[_token],'Unapproved token!');
 		require(_amount > 0, 'Amount must be positive!');
-		ERC20(_token).transferFrom(msg.sender,address(this), _amount);
+		ERC20(_token).transferFrom(msg.sender,address(this), _amount);		
 		emit Deposit(_token, _recipient, _amount);
 	}
 
@@ -31,6 +32,7 @@ contract Source is AccessControl {
 		//YOUR CODE HERE
 		require(approved[_token],'Unapproved token!');
 		require(_amount > 0, 'Amount must be positive!');
+		require(ERC20(_token).balanceOf(address(this))>_amount,'Source has insufficient balance!');
 		ERC20(_token).transfer(_recipient, _amount);
 		emit Withdrawal(_token, _recipient, _amount);
 	}
