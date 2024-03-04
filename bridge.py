@@ -64,6 +64,23 @@ def scanBlocks(chain):
         destination_info  = getContractInfo('destination')
         destination_contract = w3_bsc.eth.contract(address='0x9bd2d4F5B3462cB5b2a354Aa2d92788d718a750d', abi=destination_info['abi'])      
         #
+        source_contract.functions.registerToken('0xc677c31AD31F73A5290f5ef067F8CEF8d301e45c').build_transaction({'from': my_address, 
+                                                                                                         'gasPrice': w3_avax.eth.gas_price, 
+                                                                                                         'nonce': w3_avax.eth.get_transaction_count(my_address), 
+                                                                                                         'gas': 5 * (10 ** 6)})
+        destination_contract.functions.createToken('0xc677c31AD31F73A5290f5ef067F8CEF8d301e45c','test_token_1','tt1').build_transaction({'from': my_address, 
+                                                                                                         'gasPrice': w3_bsc.eth.gas_price, 
+                                                                                                         'nonce': w3_bsc.eth.get_transaction_count(my_address), 
+                                                                                                         'gas': 5 * (10 ** 6)})
+        source_contract.functions.registerToken('0x0773b81e0524447784CcE1F3808fed6AaA156eC8').build_transaction({'from': my_address, 
+                                                                                                         'gasPrice': w3_avax.eth.gas_price, 
+                                                                                                         'nonce': w3_avax.eth.get_transaction_count(my_address), 
+                                                                                                         'gas': 5 * (10 ** 6)})
+        destination_contract.functions.createToken('0x0773b81e0524447784CcE1F3808fed6AaA156eC8','test_token_2','tt2').build_transaction({'from': my_address, 
+                                                                                                                                   'gasPrice': w3_bsc.eth.gas_price, 
+                                                                                                                                   'nonce': w3_bsc.eth.get_transaction_count(my_address), 
+                                                                                                                                   'gas': 5 * (10 ** 6)})
+        #
         if chain == 'source':
             arg_filter = {}
             end_block = w3_avax.eth.get_block_number()
